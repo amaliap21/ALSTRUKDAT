@@ -2,19 +2,38 @@
 
 int main()
 {
-    int a, b;
-    scanf("%d", &a);
-    scanf("%d", &b);
+    int count, rAwl, rAkh, a, b, digit, lastDigit, benar;
 
-    int i, sum = 0;
-    for (i = a; i <= b; i++)
+    scanf("%d", &rAwl);
+    scanf("%d", &rAkh);
+
+    count = 0;
+    a = rAwl;
+
+    while (a <= rAkh)
     {
-        if (i % 11 == 0 || i % 111 == 0 || i % 1111 == 0 || i % 11111 == 0 || i % 111111 == 0)
+        benar = 1;
+        lastDigit = a % 10;
+        b = a;
+
+        while (benar == 1 && b != 0)
         {
-            sum += 1;
+            digit = b % 10;
+            if (lastDigit != digit)
+            {
+                benar = 0;
+            }
+            b /= 10;
         }
+
+        if (benar == 1)
+        {
+            count++;
+        }
+
+        a++;
     }
 
-    printf("%d\n", sum);
+    printf("%d\n", count);
     return 0;
 }
