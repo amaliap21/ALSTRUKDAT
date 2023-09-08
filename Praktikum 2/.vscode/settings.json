@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "liststatik.h": "c",
+    "stdlib.h": "c"
+  }
+}
