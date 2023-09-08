@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "liststatik.h"
-#include "boolean.h"
+#include "liststatik.c"
 
 int main()
 {
@@ -23,24 +23,25 @@ int main()
         {
             isStat = false;
         }
+
         i++;
     }
 
     if (isStat)
     {
-        printf("Static Monotonic List\n");
+        printf("Static Monotic list\n");
     }
     else if (isAsc)
     {
-        printf("Non-descending Monotonic List\n");
+        printf("Non-descending Monotic list\n");
     }
     else if (isDesc)
     {
-        printf("Non-ascending Monotonic List\n");
+        printf("Non-ascending Monotic list\n");
     }
     else
     {
-        printf("Non-monotonic List\n");
+        printf("Non-monotic list\n");
     }
 
     return 0;
