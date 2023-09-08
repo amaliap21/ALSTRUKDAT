@@ -17,11 +17,11 @@ int main()
     int i;
     for (i = 0; i < p; i++)
     {
-        TIME min, max;
+        printf("[%d]\n", i + 1);
         BacaTIME(&a);
         BacaTIME(&b);
+        TIME min, max;
 
-        printf("[%d]\n", i + 1);
         if (TLT(a, b))
         {
             min = a;

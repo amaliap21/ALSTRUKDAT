@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "cmath": "c",
+    "point.h": "c",
+    "garis.h": "c"
+  }
+}
