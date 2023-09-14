@@ -1,4 +1,11 @@
+/* Nama     : Amalia Putri */
+/* NIM      : 13522042 */
+/* Kampus   : Ganesha */
+/* File     : listdin.c */
+/* Tanggal  : 14 September 2023 */
+
 #include <stdio.h>
+#include <stdlib.h>
 #include "listdin.h"
 
 /* ********** KONSTRUKTOR ********** */
@@ -8,9 +15,9 @@ void CreateListDin(ListDin *l, int capacity)
     /* I.S. l sembarang, capacity > 0 */
     /* F.S. Terbentuk list dinamis l kosong dengan kapasitas capacity */
 
-    BUFFER(*l) = (ElType *)malloc(capacity * sizeof(ElType));
-    CAPACITY(*l) = capacity;
+    BUFFER(*l) = (int *)malloc(capacity * sizeof(ElType));
     NEFF(*l) = 0;
+    CAPACITY(*l) = capacity;
 }
 
 void dealocateList(ListDin *l)
@@ -40,14 +47,7 @@ IdxType getFirstIdx(ListDin l)
     /* Prekondisi : List l tidak kosong */
     /* Mengirimkan indeks elemen l pertama */
 
-    if (listLength(l) == 0)
-    {
-        return IDX_UNDEF;
-    }
-    else
-    {
-        return IDX_MIN;
-    }
+    return IDX_MIN;
 }
 
 IdxType getLastIdx(ListDin l)
@@ -55,14 +55,7 @@ IdxType getLastIdx(ListDin l)
     /* Prekondisi : List l tidak kosong */
     /* Mengirimkan indeks elemen l terakhir */
 
-    if (NEFF(l) == 0)
-    {
-        return IDX_UNDEF;
-    }
-    else
-    {
-        return (NEFF(l) - 1);
-    }
+    return (NEFF(l) - 1);
 }
 
 /* ********** Test Indeks yang valid ********** */
@@ -71,14 +64,14 @@ boolean isIdxValid(ListDin l, IdxType i)
     /* Mengirimkan true jika i adalah indeks yang valid utk kapasitas list l */
     /* yaitu antara indeks yang terdefinisi utk container*/
 
-    return ((i >= IDX_MIN) && (i <= CAPACITY(l)));
+    return ((i >= getFirstIdx(l)) && (i <= CAPACITY(l)));
 }
 boolean isIdxEff(ListDin l, IdxType i)
 {
     /* Mengirimkan true jika i adalah indeks yang terdefinisi utk list */
     /* yaitu antara 0..NEFF(l) */
 
-    return ((i >= IDX_MIN) && (i <= NEFF(l)));
+    return ((i >= getFirstIdx(l)) && (i <= getLastIdx(l)));
 }
 
 /* ********** TEST KOSONG/PENUH ********** */
@@ -114,31 +107,25 @@ void readList(ListDin *l)
 
     /* KAMUS */
     IdxType i;
-    int N, elemen;
+    int N;
 
     /* ALGORITMA */
-    scanf("%d", &N);
-
-    while ((N < 0) || (N > CAPACITY(*l)))
+    do
     {
         scanf("%d", &N);
-    }
+    } while (N < 0 || N > CAPACITY(*l));
 
-    if (N == 0)
-    {
-        CreateListDin(l, CAPACITY(*l));
-    }
-    else
+    NEFF(*l) = N;
+
+    if (N != 0)
     {
         for (i = IDX_MIN; i < N; i++)
         {
-            scanf("%d", elemen);
-            ELMT(*l, i) = elemen;
+            scanf("%d", &ELMT(*l, i));
         }
-
-        NEFF(*l) = N;
     }
 }
+
 void printList(ListDin l)
 {
     /* Proses : Menuliskan isi list dengan traversal, list ditulis di antara kurung siku;
@@ -153,10 +140,14 @@ void printList(ListDin l)
     IdxType i;
 
     /* ALGORITMA */
-    if (listLength(l) != 0)
+    if (isEmpty(l))
+    {
+        printf("[]");
+    }
+    else
     {
         printf("[");
-        for (i = IDX_MIN; i < getLastIdx(l); i++)
+        for (i = getFirstIdx(l); i <= getLastIdx(l); i++)
         {
             printf("%d", ELMT(l, i));
             if (i != getLastIdx(l))
@@ -181,7 +172,10 @@ ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus)
     IdxType i;
 
     /* ALGORITMA */
-    for (i = IDX_MIN; i <= getLastIdx(l1); i++)
+    CreateListDin(&l3, CAPACITY(l1));
+    NEFF(l3) = NEFF(l1);
+
+    for (i = getFirstIdx(l1); i <= getLastIdx(l1); i++)
     {
         if (plus)
         {
@@ -192,6 +186,8 @@ ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus)
             ELMT(l3, i) = ELMT(l1, i) - ELMT(l2, i);
         }
     }
+
+    return l3;
 }
 
 /* ********** OPERATOR RELASIONAL ********** */
@@ -204,20 +200,19 @@ boolean isListEqual(ListDin l1, ListDin l2)
     IdxType i;
 
     /* ALGORITMA */
-    if (listLength(l1) != listLength(l2))
+    if (listLength(l1) == listLength(l2))
     {
-        return false;
-    }
-    else
-    {
-        for (i = IDX_MIN; i <= getLastIdx(l1); i++)
+        for (i = getFirstIdx(l1); i <= getLastIdx(l1); i++)
         {
             if (ELMT(l1, i) != ELMT(l2, i))
             {
                 return false;
             }
         }
+        return true;
     }
+
+    return false;
 }
 
 /* ********** SEARCHING ********** */
@@ -234,11 +229,7 @@ IdxType indexOf(ListDin l, ElType val)
     IdxType i;
 
     /* ALGORITMA */
-    if (isEmpty(l))
-    {
-        return IDX_UNDEF;
-    }
-    else
+    if (!isEmpty(l))
     {
         for (i = IDX_MIN; i <= getLastIdx(l); i++)
         {
@@ -250,6 +241,8 @@ IdxType indexOf(ListDin l, ElType val)
 
         return IDX_UNDEF;
     }
+
+    return IDX_UNDEF;
 }
 
 /* ********** NILAI EKSTREM ********** */
@@ -265,13 +258,13 @@ void extremeValues(ListDin l, ElType *max, ElType *min)
     *min = ELMT(l, IDX_MIN);
 
     /* ALGORITMA */
-    for (i = IDX_MIN; i <= getLastIdx(l); i++)
+    for (i = getFirstIdx(l); i <= getLastIdx(l); i++)
     {
-        if (ELMT(l, i) > max)
+        if (ELMT(l, i) > *max)
         {
             *max = ELMT(l, i);
         }
-        if (ELMT(l, i) > min)
+        if (ELMT(l, i) < *min)
         {
             *min = ELMT(l, i);
         }
@@ -290,13 +283,12 @@ void copyList(ListDin lIn, ListDin *lOut)
 
     /* ALGORITMA */
     CreateListDin(lOut, CAPACITY(lIn));
+    NEFF(*lOut) = NEFF(lIn);
 
     for (i = IDX_MIN; i <= getLastIdx(lIn); i++)
     {
         ELMT(*lOut, i) = ELMT(lIn, i);
     }
-
-    NEFF(*lOut) = NEFF(lIn);
 }
 
 ElType sumList(ListDin l)
@@ -309,9 +301,9 @@ ElType sumList(ListDin l)
     int sum = 0;
 
     /* ALGORITMA */
-    if (!isEmpty)
+    if (!isEmpty(l))
     {
-        for (i = IDX_MIN; i <= getLastIdx(l); i++)
+        for (i = getFirstIdx(l); i <= getLastIdx(l); i++)
         {
             sum += ELMT(l, i);
         }
@@ -330,13 +322,13 @@ int countVal(ListDin l, ElType val)
     int count = 0;
 
     /* ALGORITMA */
-    if (!isEmpty)
+    if (!isEmpty(l))
     {
-        for (i = IDX_MIN; i <= getLastIdx(l); i++)
+        for (i = getFirstIdx(l); i <= getLastIdx(l); i++)
         {
             if (ELMT(l, i) == val)
             {
-                count++;
+                count += 1;
             }
         }
     }
@@ -395,8 +387,11 @@ void insertLast(ListDin *l, ElType val)
     /* I.S. List l boleh kosong, tetapi tidak penuh */
     /* F.S. val adalah elemen terakhir l yang baru */
 
-    NEFF(*l) += 1;
-    ELMT(*l, getLastIdx(*l)) = val;
+    if (!isFull(*l))
+    {
+        ELMT(*l, getLastIdx(*l) + 1) = val;
+        NEFF(*l) += 1;
+    }
 }
 
 /* ********** MENGHAPUS ELEMEN ********** */
@@ -409,8 +404,11 @@ void deleteLast(ListDin *l, ElType *val)
     /*      List l mungkin menjadi kosong */
 
     /* ALGORITMA */
-    *val = ELMT(*l, getLastIdx(*l));
-    NEFF(*l) -= 1;
+    if (!isEmpty(*l))
+    {
+        *val = ELMT(*l, getLastIdx(*l));
+        NEFF(*l) -= 1;
+    }
 }
 
 /* ********* MENGUBAH UKURAN ARRAY ********* */
@@ -420,22 +418,7 @@ void expandList(ListDin *l, int num)
     /* I.S. List sudah terdefinisi */
     /* F.S. Ukuran list bertambah sebanyak num */
 
-    /* KAMUS */
-    ListDin temp;
-    IdxType i;
-    int capacity = CAPACITY(*l);
-
-    /* ALGORITMA */
-    copyList(*l, &temp);
-    CreateListDin(l, capacity + num);
-
-    for (i = IDX_MIN; i <= getLastIdx(temp); i++)
-    {
-        ELMT(*l, i) = ELMT(temp, i);
-    }
-
-    NEFF(*l) = NEFF(temp);
-    dealocateList(&temp);
+    CAPACITY(*l) += num;
 }
 
 void shrinkList(ListDin *l, int num)
@@ -444,22 +427,7 @@ void shrinkList(ListDin *l, int num)
     /* I.S. List sudah terdefinisi, ukuran capacity > num, dan nEff < capacity - num. */
     /* F.S. Ukuran list berkurang sebanyak num. */
 
-    /* KAMUS */
-    ListDin temp;
-    IdxType i;
-    int capacity = CAPACITY(*l);
-
-    /* ALGORITMA */
-    copyList(*l, &temp);
-    CreateListDin(l, capacity - num);
-
-    for (i = IDX_MIN; i <= getLastIdx(temp); i++)
-    {
-        ELMT(*l, i) = ELMT(temp, i);
-    }
-
-    NEFF(*l) = NEFF(temp);
-    dealocateList(&temp);
+    CAPACITY(*l) -= num;
 }
 
 void compressList(ListDin *l)
@@ -468,20 +436,8 @@ void compressList(ListDin *l)
     /* I.S. List tidak kosong */
     /* F.S. Ukuran capacity = nEff */
 
-    /* KAMUS */
-    ListDin temp;
-    IdxType i;
-    int capacity = CAPACITY(*l);
-
-    /* ALGORITMA */
-    copyList(*l, &temp);
-    CreateListDin(l, NEFF(*l));
-
-    for (i = IDX_MIN; i <= getLastIdx(temp); i++)
+    if (!isEmpty(*l))
     {
-        ELMT(*l, i) = ELMT(temp, i);
+        CAPACITY(*l) = NEFF(*l);
     }
-
-    NEFF(*l) = NEFF(temp);
-    dealocateList(&temp);
 }
