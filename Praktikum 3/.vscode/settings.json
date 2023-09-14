@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "stdio.h": "c"
+    },
+    "prettier.useEditorConfig": true,
+    "prettier.useTabs": false,
+    "reactSnippets.settings.prettierEnabled": false
+}
