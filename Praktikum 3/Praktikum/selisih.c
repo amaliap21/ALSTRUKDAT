@@ -1,22 +1,25 @@
 #include <stdio.h>
 #include "listdin.h"
 
-int main(){
+int main()
+{
     ListDin l;
-    CreateListDin(&l,100);
+    CreateListDin(&l, 100);
     readList(&l);
 
-    int max,min;
-    extremeValues(l,&max,&min);
+    int max, min;
+    extremeValues(l, &max, &min);
     max += 1;
 
-    int selisih = max-min;
+    int selisih = max - min;
 
-    if (listLength(l) != 1){
+    if (listLength(l) != 1)
+    {
         printf("%d\n", selisih);
     }
-    else{
-        printf("%d\n", selisih-1);
+    else
+    {
+        printf("%d\n", selisih - 1);
     }
     return 0;
 }
