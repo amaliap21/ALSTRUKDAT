@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "listdin.h": "c"
     },
     "prettier.useEditorConfig": true,
     "prettier.useTabs": false,
