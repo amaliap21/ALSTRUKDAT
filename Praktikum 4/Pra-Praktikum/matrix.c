@@ -1,7 +1,7 @@
 /* Nama     : Amalia Putri */
 /* NIM      : 13522042 */
 /* Kampus   : Ganesha */
-/* File     : listdin.c */
+/* File     : matrix.c */
 /* Tanggal  : 19 September 2023 */
 
 #include <stdio.h>
