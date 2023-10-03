@@ -15,6 +15,7 @@
 int main()
 {
     int longest = 0;
+    
     STARTWORD();
     while (!EndWord)
     {

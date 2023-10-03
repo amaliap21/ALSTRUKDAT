@@ -51,7 +51,7 @@ int main()
     int i, num;
     boolean needSpace, isNum, printNum;
     Word nol, satu, dua, tiga, empat, lima, enam, tujuh, delapan, sembilan;
-    Word sepuluh, sebelas, belas, puluh, seratus, ratus, seribu, ribu;
+    Word sepuluh, puluh, sebelas, belas, seratus, ratus, seribu, ribu;
 
     // ALGORITMA
     STARTWORD();
@@ -89,14 +89,14 @@ int main()
     char csepuluh[50] = "sepuluh";
     sepuluh = strToWord(csepuluh, 7);
 
+    char cpuluh[50] = "puluh";
+    puluh = strToWord(cpuluh, 5);
+
     char csebelas[50] = "sebelas";
     sebelas = strToWord(csebelas, 7);
 
     char cbelas[50] = "belas";
     belas = strToWord(cbelas, 5);
-
-    char cpuluh[50] = "puluh";
-    puluh = strToWord(cpuluh, 5);
 
     char cseratus[50] = "seratus";
     seratus = strToWord(cseratus, 7);
