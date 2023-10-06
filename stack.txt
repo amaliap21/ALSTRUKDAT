@@ -54,13 +54,12 @@ function mergeStack(s1,s2: Stack) → Stack
         x : InfoType
 
     ALGORITMA
-        CreateStack(s)
-        CreateStack(sTemp)
-        copyStack(s1,s)
-        copyStack(s2,sTemp)
+        CreateStack(s3)
+        copyStack(s1,s3)
         inverseStack(sTemp)
-        while not isEmpty(sTemp) and not (isFull(s)) do
+
+        while (!isEmpty(sTemp)) and (!isFull(s)) do
             pop(sTemp, x)
-            push(s, x)
+            push(s3, x)
         { isEmpty(sTemp) or isFull(s) }
         -> s
