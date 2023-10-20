@@ -1,0 +1,2 @@
+# ALSTRUKDAT
+Praktikum Alstrukdat
