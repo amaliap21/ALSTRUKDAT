@@ -31,6 +31,7 @@ int main()
     length = listLength(l);
     printf("\nLength: %d\n", length);
 
+
     // delete first
     printf("\nDelete first\n");
     deleteFirst(&l, &x);

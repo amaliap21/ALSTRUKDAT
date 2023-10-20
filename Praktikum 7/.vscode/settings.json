@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "stack.h": "c",
+        "wordmachine.h": "c",
+        "mesintoken.h": "c"
+    }
+}

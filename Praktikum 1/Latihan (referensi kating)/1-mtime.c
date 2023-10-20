@@ -1,8 +1,8 @@
 /* NIM = 13522042*/
 /* Nama = Amalia Putri*/
 /* Tanggal = 1 September 2023*/
-/* Topik praktikum = ADT Sederhana*/
-/* Membuatlah sebuah program yang digunakan untuk membaca beberapa pasangan TIME yang merepresentasikan waktu mulai dan waktu selesai pembicaraan telepon di suatu perusahaan penyedia layanan telepon, misalnya <T1, T2>.  */
+/* Topik praktikum = ADT: time*/
+/* Membuat sebuah program yang digunakan untuk membaca beberapa pasangan TIME yang merepresentasikan waktu mulai dan waktu selesai pembicaraan telepon di suatu perusahaan penyedia layanan telepon, misalnya <T1, T2>.  */
 /* Source: Gare IF'20*/
 
 #include <stdio.h>

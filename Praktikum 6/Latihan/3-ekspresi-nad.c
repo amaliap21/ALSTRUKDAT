@@ -7,10 +7,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "stack.h"
-#include "wordmachine.h"
+#include "stack.c"
+#include "wordmachine.c"
 
-boolean isOperator(char *c){
+boolean isOperator(char *c)
+{
     return (c[0] == '+' || c[0] == '-' || c[0] == '*' || c[0] == '/' || c[0] == '^');
 }
 
@@ -46,16 +47,22 @@ int main()
     int temp;
     int val1, val2;
     int i = 0;
-    while (!endWord){
-        if (!isOperator(currentWord.TabWord)){
+    while (!endWord)
+    {
+        if (!isOperator(currentWord.TabWord))
+        {
             temp = 0;
-            for (i = 0; i < currentWord.Length; i++){
+            printf("temp before 10: %d\n",temp);
+            for (i = 0; i < currentWord.Length; i++)
+            {
                 temp = temp * 10 + (currentWord.TabWord[i] - 48);
+                printf("temp after 10: %d\n",temp);
             }
             Push(&S, temp);
             printf("%d\n", temp);
         }
-        else{
+        else
+        {
             Pop(&S, &val2);
             Pop(&S, &val1);
             printf("%d %c %d\n", val1, currentWord.TabWord[0], val2);
@@ -64,9 +71,12 @@ int main()
         }
         ADVWORD();
     }
-    if (IsEmpty(S)){
+    if (IsEmpty(S))
+    {
         printf("Ekspresi kosong\n");
-    } else {
+    }
+    else
+    {
         Pop(&S, &temp);
         printf("Hasil=%d\n", temp);
     }
