@@ -3,6 +3,9 @@
     "time.h": "c",
     "vector.h": "c",
     "boolean.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "datetime.h": "c",
+    "list_circular.h": "c",
+    "stack.h": "c"
   }
 }
