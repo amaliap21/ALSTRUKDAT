@@ -1,79 +1,71 @@
 #include <stdio.h>
 #include "queue.h"
+#include "math.h"
 
-int modulus(int N)
+int max(int a, int b)
 {
-    boolean found = false;
-    int mod = N - 1;
-    while (mod >= 2 && found == false)
+    int res;
+    (a > b) ? (res = a) : (res = b);
+    return res;
+}
+
+int minSteps(int N)
+{
+    Queue qNums;
+    CreateQueue(&qNums);
+    enqueue(&qNums, N);
+
+    Queue qSteps;
+    CreateQueue(&qSteps);
+    enqueue(&qSteps, 0);
+
+    boolean isFound = false;
+
+    int valNum, valStep, divNum;
+    while (!isFound)
     {
-        if (N % mod == 0)
+        dequeue(&qNums, &valNum);
+        dequeue(&qSteps, &valStep);
+
+        if (valNum == 0)
         {
-            found = true;
+            isFound = true;
         }
         else
         {
-            mod--;
+            enqueue(&qNums, valNum - 1);
+            enqueue(&qSteps, valStep + 1);
+
+            int sqNum = sqrt(valNum);
+
+            int i;
+            for (i = 2; i <= sqNum; i++)
+            {
+                if (valNum % i == 0)
+                {
+                    divNum = valNum / i;
+                    if (!isFull(qNums))
+                    {
+                        enqueue(&qNums, max(i, divNum));
+                        enqueue(&qSteps, valStep + 1);
+                    }
+                }
+            }
         }
     }
-    if (found == true)
-    {
-        return mod;
-    }
-    else
-    {
-        return 0;
-    }
+
+    return valStep;
 }
 
 int main()
 {
-    Queue q;
-    CreateQueue(&q);
+    int n, num, res = 1;
+    scanf("%d", &n);
 
-    int N;
-    scanf("%d", &N);
-
-    int i;
-    for (i = 0; i < N; i++)
+    while (n--)
     {
-        int Ni;
-        scanf("%d", &Ni);
-
-        int r = 0;
-        while (Ni > 0)
-        {
-            int bagi = modulus(Ni);
-            if (bagi != 0)
-            {
-                int bagi2 = Ni / bagi;
-                if (bagi >= bagi2)
-                {
-                    Ni = bagi;
-                }
-                else
-                {
-                    Ni = bagi2;
-                }
-            }
-            else
-            {
-                Ni = Ni - 1;
-            }
-            r++;
-        }
-        enqueue(&q, r);
+        scanf("%d", &num);
+        res *= minSteps(num);
     }
-
-    int mult = 1;
-    while (!isEmpty(q))
-    {
-        int val;
-        dequeue(&q, &val);
-        mult = mult * val;
-    }
-
-    printf("%d\n", mult);
-
-    return 0;
+    printf("%d\n", res);
 }
